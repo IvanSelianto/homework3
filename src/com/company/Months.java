@@ -1,0 +1,5 @@
+package com.company;
+
+public enum Months {
+DECEMBER, JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, SEPTEMBER, OCTOBER, NOVEMBER
+}
