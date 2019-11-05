@@ -40,7 +40,7 @@ public class Main {
         printTwoDimensionalArray(replaceOddElements(twoDimensionalArray));
         System.out.println("-----------------------");
         System.out.println("Task 8");
-        System.out.println(productOfDiagonalElements(twoDimensionalArray, 2, 3));
+        System.out.println(findMultiplicationOfDiagonalElements(twoDimensionalArray, 2));
         System.out.println("-----------------------");
         System.out.println("Task 9");
         System.out.println(isPassHoliday(Holidays.NEW_YEAR));
@@ -213,7 +213,7 @@ public class Main {
                 if (twoDimensionalArray[i][j] < min) {
                     min = twoDimensionalArray[i][j];
                     indexMinI = i;
-                    indexMaxJ = j;
+                    indexMinJ = j;
 
                 }
             }
@@ -248,17 +248,29 @@ public class Main {
         return twoDimensionalArray;
     }
 
-    public static int productOfDiagonalElements(int[][] twoDimensionalArray, int numberArray, int numberElementArray) {
-        int product = 0;
-        try {
-            product = twoDimensionalArray[numberArray - 1][numberElementArray - 1] * twoDimensionalArray[numberArray - 1][numberElementArray + 1] * twoDimensionalArray[numberArray + 1][numberElementArray - 1] * twoDimensionalArray[numberArray + 1][numberElementArray + 1];
-
-
-        } catch (Exception e) {
-
-
+    private static int findMultiplicationOfDiagonalElements(int[][] array, int number) {
+        int elementPositionI = 0;
+        int elementPositionJ = 0;
+        outer:
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                if (array[i][j] == number) {
+                    elementPositionI = i;
+                    elementPositionJ = j;
+                    break outer;
+                }
+            }
         }
-        return product;
+        return getElement(array, elementPositionI, elementPositionJ, -1, -1) * getElement(array, elementPositionI, elementPositionJ, -1, 1) * getElement(array, elementPositionI, elementPositionJ, 1, -1) * getElement(array, elementPositionI, elementPositionJ, 1, 1);
+    }
+
+    private static int getElement(int[][] array, int elementPositionI, int elementPositionJ, int incrementI, int incrementJ) {
+        int incrementedI = elementPositionI + incrementI;
+        int incrementedJ = elementPositionJ + incrementJ;
+        if ((incrementedI >= 0 && incrementedI < array.length) && (incrementedJ >= 0 && incrementedJ < array[incrementedI].length)) {
+            return array[incrementedI][incrementedJ];
+        }
+        return 1;
     }
 
     public static boolean isPassHoliday(Holidays holidays) {
@@ -276,10 +288,10 @@ public class Main {
                 if (date.isAfter(LocalDate.of(year, 3, 8))) ;
                 return true;
             case VICTORY_DAY:
-                if(date.isAfter(LocalDate.of(year,5,9)));
+                if (date.isAfter(LocalDate.of(year, 5, 9))) ;
                 return true;
             case HALLOWEEN:
-                if(date.isAfter(LocalDate.of(year, 10,31)));
+                if (date.isAfter(LocalDate.of(year, 10, 31))) ;
                 return true;
         }
         return false;
